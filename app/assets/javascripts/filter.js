@@ -61,19 +61,19 @@ Filter.AnnotationView = Backbone.View.extend({
 		var txt = this.model.get("text");
 		var qt = this.model.get("quote");
 		
-		if (txt != "") { // This annotation contains a comment
+		if (txt && txt != "") { // This annotation contains a comment
 			this.mdConvert(txt);
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}
 		else { // This is just a highlight -- no contents
-			if (qt != "") { // This annotation contains a comment
+			if (qt && qt != "") { // This annotation contains a comment
 				$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON()));
 			}
 		}
 		return this;
 	},
 	mdConvert: function (txt) {
-		if (txt != "") {
+		if (txt && txt != "") {
 			this.model.set("text", this.mdconverter.makeHtml(txt));
 		}
 		return this;
@@ -101,7 +101,7 @@ Filter.AnnotationListView = Backbone.View.extend({
 // Application
 Filter.App = Backbone.Router.extend({
 	routes: {
-		'list':  'listAnnotations', 
+		'list':  'listAnnotations',
 	},
 	// takes an object literal of options for an XHR request.
 	listAnnotations: function (options, endpoint, token) {

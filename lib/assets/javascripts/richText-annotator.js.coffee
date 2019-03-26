@@ -65,9 +65,9 @@ class Annotator.Plugin.RichText extends Annotator.Plugin
 
   updateViewer: (field, annotation) =>
     textDiv = $(field.parentNode).find("div:first-of-type")[0]
-    textDiv.innerHTML = @mdConvert annotation.text
+    textDiv.innerHTML = if(annotation.text? then @mdConvert annotation.text)
     $(textDiv).addClass "richText-annotation"
     $(field).remove() #this is the auto create field by annotator and it is not necessary
 
   mdConvert: (txt) =>
-    if @mdconverter? and txt isnt "" then @mdconverter.makeHtml txt else txt
+    if @mdconverter? and txt? and txt isnt "" then @mdconverter.makeHtml txt else txt

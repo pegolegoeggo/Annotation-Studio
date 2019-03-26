@@ -79,7 +79,7 @@ Sidebar.AnnotationView = Backbone.View.extend({
     $(this.el).find("highlight.comment img").addClass("thumbnail");
 
     // This annotation contains a comment
-    if (this.model.get("text") != "") {
+    if (this.model.get("text") && this.model.get("text") != "") {
       this.mdConvert();
       $(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON())); // instead of console.info:
     }
@@ -97,7 +97,7 @@ Sidebar.AnnotationView = Backbone.View.extend({
   },
   mdConvert: function() {
     var userComment = this.model.get("text");
-    if (userComment != "") {
+    if (userComment && userComment != "") {
       var formattedComment = this.mdconverter.makeHtml(userComment);
       // Temporarily converting to text-only comment due to sidebar formatting issues
       var textComment = $(formattedComment).text()
