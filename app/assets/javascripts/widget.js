@@ -61,7 +61,7 @@ Widget.AnnotationView = Backbone.View.extend({
 		var txt = this.model.get("text");
 		var qt = this.model.get("quote");
 
-		if (txt && txt != "") { // This annotation contains a comment
+		if (txt != "") { // This annotation contains a comment
 			this.mdConvert();
 			if (txt.length > 50) {
 				this.model.set("text" , txt.substring(0,50) + "...");
@@ -72,7 +72,7 @@ Widget.AnnotationView = Backbone.View.extend({
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}
 		else { // This is just a highlight -- no contents
-			if (qt && qt != "") { // This annotation contains a comment
+			if (qt != "") { // This annotation contains a comment
 				if (qt.length > 50) {
 					this.model.set("quote" , qt.substring(0,50) + "...");
 				}
@@ -86,7 +86,7 @@ Widget.AnnotationView = Backbone.View.extend({
 	},
 	mdConvert: function () {
 		var userComment = this.model.get("text");
-		if (userComment && userComment != "") {
+		if (userComment != "") {
 			this.model.set("text", this.mdconverter.makeHtml(userComment));
 		}
 		return this;
