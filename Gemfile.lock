@@ -378,6 +378,8 @@ GEM
       html_writer (~> 0.2.0)
       pdf-reader (~> 1.1.0)
     pg (0.18.4)
+    protected_attributes (1.1.4)
+      activemodel (>= 4.0.1, < 5.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -574,6 +576,7 @@ DEPENDENCIES
   pdf-reader
   pdf-reader-html
   pg (~> 0.15)
+  protected_attributes
   pry-rails
   rabl
   rails (= 4.2.1)

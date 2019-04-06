@@ -8,10 +8,13 @@ AnnotationStudio::Application.configure do
   config.cache_classes = true
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  config.serve_static_files = true
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
+  
+  # Eager load code on boot.
+  config.eager_load = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
@@ -59,5 +62,6 @@ AnnotationStudio::Application.configure do
   }
 
 
-  config.eager_load = true
+
+
 end

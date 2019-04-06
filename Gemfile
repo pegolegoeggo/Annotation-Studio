@@ -7,6 +7,7 @@ gem 'unicorn'
 
 gem 'pg', '~> 0.15'
 gem "newrelic_rpm"#, "~> 3.5.7.59"
+gem 'protected_attributes'
 
 gem 'devise'#, '>= 2.2.2'
 gem 'cancan'
