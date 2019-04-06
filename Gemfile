@@ -5,7 +5,7 @@ ruby '2.2.4'
 gem 'rails', '4.2.1'
 gem 'unicorn'
 
-gem 'pg'
+gem 'pg', '~> 0.15'
 gem "newrelic_rpm"#, "~> 3.5.7.59"
 
 gem 'devise'#, '>= 2.2.2'
