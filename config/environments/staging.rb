@@ -57,4 +57,7 @@ AnnotationStudio::Application.configure do
     :password       => ENV['SENDGRID_PASSWORD'],
     :domain         => ENV['SENDGRID_DOMAIN']
   }
+
+
+  config.eager_load = true
 end

@@ -38,7 +38,7 @@ AnnotationStudio::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default :charset => "utf-8"  
+  config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings =  {
     :address  => "smtp.gmail.com",
     :domain  => "mit.edu",
@@ -47,6 +47,7 @@ AnnotationStudio::Application.configure do
     :password  => ENV['GMAIL_PASS'],
     :authentication  => :plain,
     :enable_starttls_auto => true
-  }  
-end
+  }
 
+  config.eager_load = false
+end
