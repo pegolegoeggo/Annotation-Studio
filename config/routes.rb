@@ -42,6 +42,7 @@ AnnotationStudio::Application.routes.draw do
     end
   end
 
+
 	get 'exception_test' => "annotations#exception_test"
   # root :to => "devise/sessions#new"
 

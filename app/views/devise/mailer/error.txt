@@ -1,0 +1,4 @@
+<!-- <p><%= link_to 'Confirm my account', multitenant_domain + confirmation_path(@resource, :confirmation_token => @token) %></p>
+ -->
+
+ line taken out form confirmation_instructions.html.erb. throws undefined local variable/method multitenant_domain when included in file. 

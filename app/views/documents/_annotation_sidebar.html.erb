@@ -43,8 +43,12 @@ var plugin_options = function() {
         'admin': ['<%= current_user.email %>'] // no one else can ever admin
       },
       userString: function (user) {
-        // return user.split("@")[0]
-        return annotation_username;
+        //look up user's name through email in postgres
+        //but need param from javascript to be passed into ruby. 
+
+        //note: can return any string and it'll be displayed on the page. 
+        return user.split("@")[0]
+
       },
       // Permissions settings per-annotation
       showViewPermissionsCheckbox: true,

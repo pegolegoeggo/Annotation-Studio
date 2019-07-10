@@ -1,0 +1,16 @@
+#rails commands: documents 
+
+#if many-to-many relationship works: 
+
+add groups to document: 
+
+1. in model (.rb)
+class Document < ActiveRecord::Base
+	has_and_belongs_to_many :groups
+end
+
+
+in app/models/groups.rb: 
+class Group < ActiveRecord::Base
+	has_and_belongs_to_many :documents
+

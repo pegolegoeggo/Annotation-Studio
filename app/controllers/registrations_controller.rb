@@ -1,5 +1,10 @@
 class RegistrationsController < Devise::RegistrationsController
-
+	def create
+		super
+		if resource.save
+			puts 'custom logic!' 
+		end
+	end
 	protected
 
 	def update_resource(resource, params)
