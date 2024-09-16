@@ -1,4 +1,4 @@
-<%= content_for :body_id, 'dashboard' %>
+ <%= content_for :body_id, 'dashboard' %>
 <%= content_for :body_class, 'index' %>
 <%= content_for :page_title, 'Dashboard' %>
 <%= stylesheet_link_tag "users" %>
@@ -26,20 +26,16 @@
     </div>
   </div>
 
-
-
   <div class="dropdown">
-      <button class="dropbtn">Groups <span class="badge" ><%= @current_user.groups.size %></span></button>
+      <button class="dropbtn">Groups <span class="badge" ><%= current_user.groups.size %></span></button>
       <center><div class="arrow-up"></div></center>
     <div class="dropdown-content" style="text-align:right; padding-right: 25%;">
 
-
-      <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
+      <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= current_user.groups.where(owner_id: current_user.id).size %></span> </a>
       <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
       <a onclick="show()" style="display:inline">New</a>
       <a onclick= "on()" style="display:inline"> Join</a>
-  </div> <!-- dropdown-content -->
-
+   </div> <!-- dropdown-content -->
 </div>
   
 </nav> <!--navigation bar stops-->
@@ -57,8 +53,10 @@
 <div class="titleBar" >
 
   <div style="width: 50%;float:left;">
-    <h4 id= "current-page"> Shared Documents </h4>
-    <p class="greyText" id="current-description">Your group has access to shared documents.</p>
+
+    <h4 id= "current-page" > Shared Documents </h4>
+
+    <p class="greyText" id="current-description">Documents Shared with My Groups</p>
   </div>
 
   <div style="width:50%;float: right; ">
@@ -96,6 +94,9 @@
 <div class = "content" id="joined-groups" style="display:none">
 </div>
 
+
+</div> <!--clearFloat ends-->
+
 <!-- overlay for join group -->
 <div id="join-background">
 
@@ -118,72 +119,21 @@
 </div> 
 </div>
 
-</div> <!--clearFloat ends-->
-
-
 
 <!-- overlay for create group -->
 
 <div id="create-background">
-
-<div class="overlay" id="new-group-form">
-
-  <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="hide()"></i>
-     Create a New Group</div>
-  
-  <div class="form">
-    <%= form_for Group.new do |f| %>
-      <%= f.label :group, 'Name' %>
-      <%= f.text_field :name %>
-
-      <%= f.hidden_field :owner_id, value: current_user.id %>
-
-      <%= f.submit 'Create', class: "redButton" %>
-
-  <% end %>
-    <span class="help-block" style="font-size:10px">Once you have created a name, you can edit your group in Group Management. </span>
+  <div class="overlay" id="new-group-form">
+    <%= render 'groups/new' %>
   </div>
-
-
-</div>
-
-</div>
-
-
-
-
-
-<!-- overlay for create group -->
-
-<div id="create-background">
-
-<div class="overlay" id="new-group-form">
-
-  <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="hide()"></i>
-     Create a New Group</div>
-  
-  <div class="form" >
-    <%= form_for Group.new do |f| %>
-      <%= f.label :group, 'Name' %>
-      <%= f.text_field :name %>
-
-      <%= f.hidden_field :owner_id, value: current_user.id %>
-
-      <%= f.submit 'Submit', class: "redButton"%>
-
-  <% end %>
-    <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
-  </div>
-
 </div>
 
 </div>
 
 <script type="text/javascript">
-   //a lot of repetition rn...clean up
-
-  <% if params[:nav] %>
-    var nav = "<%= params[:nav] %>"
+   //side bar toggling  moved to dashboard.js
+   <% if params[:nav] %>
+   var nav = "<%= params[:nav] %>"
 
     switch(nav) {
       case 'mydocuments':
@@ -192,36 +142,32 @@
         myDocuments.style.display = "block";
         $(myDocuments).html("<%= j render 'my_documents' %>");
         $("#current-page").text("My Documents");
-
-        $("#current-description").text("Documents Created by Me.")
-
+        $("#current-description").text("Documents Created by Me.");
+        break;
 
       case 'shareddocuments':
         var sharedDocuments = document.getElementById("shared-docs");
         $(".content").hide();
         sharedDocuments.style.display = "block";
         $("#current-page").text("Shared Documents");
-
-        $("#current-description").text("Documents Shared with My Groups.")
-
+        $("#current-description").text("Documents Shared with My Groups.");
+        break;
 
       case 'myannotations':
         var myAnnotations = document.getElementById("my-annotations");
         $(".content").hide();
         myAnnotations.style.display = "block";
         $("#current-page").text("My Annotations");
-
-        $("#current-description").text("Annotations Created by Me.")
-
+        $("#current-description").text("Annotations Created by Me.");
+        break;
 
       case 'sharedannotations':
         var sharedAnnotations = document.getElementById("shared-annotations");
         $(".content").hide();
         sharedAnnotations.style.display = "block";
         $("#current-page").text("Shared Annotations");
-
-        $("#current-description").text("Annotations Created by Group Members.")
-
+        $("#current-description").text("Annotations Created by Group Members.");
+        break;
 
       case 'mygroups':
         var mygroups = document.getElementById("my-groups");
@@ -229,9 +175,8 @@
         mygroups.style.display = "block";
         $(mygroups).html("<%= j render 'my_groups' %>");
         $("#current-page").text("My Groups");
-
-        $("#current-description").text("Groups Created by Me.")
-
+        $("#current-description").text("Groups Created by Me.");
+        break;
 
       case 'joinedgroups':
         var joinedGroups = document.getElementById("joined-groups");
@@ -239,62 +184,11 @@
         joinedGroups.style.display = "block";
         $(joinedGroups).html("<%= j render 'joined_groups' %>");
         $("#current-page").text("Joined Groups");
-
-        $("#current-description").text("Memberships in Other Groups.")
-
+        $("#current-description").text("Memberships in Other Groups.");
+        break;
       
   } //end switch
-
-  <% end #end if %>
-
-  
-
-
-//sidebar visibility toggle
-var active = false
-function openSideMenu(){
-  if (active){
-    document.getElementById('side-menu').style.width = '0';
-    active= false;
-    return;
-  }
-  document.getElementById('side-menu').style.width = '350px';
-  active = true
-}
-function closeSideMenu(){
-  document.getElementById('side-menu').style.width = '0';
-}
-
-//group join form visibility toggle
-function on(){
-  document.getElementById("join-form").style.display = "block";
-  document.getElementById("join-background").style.display = "block";
-}
-
-function off(){
-  document.getElementById("join-form").style.display = "none";
-  document.getElementById("join-background").style.display = "none";
-}
-
-//autocomplete for joining groups?
-// $(document.getElementById("groupName")).autocomplete({
-//   source: <%= raw(Group.all.pluck(:name)) %>
-// })
-
-
-
-//create group form visibility toggle. 
-function show(){
-  document.getElementById("create-background").style.display = "block";
-  document.getElementById("new-group-form").style.display = "block";
-  
-}
-
-function hide(){
-  document.getElementById("create-background").style.display = "none";
-  document.getElementById("new-group-form").style.display = "none";
-  
-}
+  <% end #if %>
 
 </script>
 
@@ -312,7 +206,7 @@ var groups=[];
   groups.push("<%=g.name %>");
 <% end %>
   var myLoadOptions = {
-    'limit': 30,
+    'limit': 100,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -321,7 +215,7 @@ var groups=[];
     'context': 'dashboard',
   };
   var classLoadOptions = {
-    'limit': 30,
+    'limit': 100,
     'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -408,8 +302,8 @@ var groups=[];
   position: relative;
   background-color:#DDDEE7;
   height:15%;
-  padding-top: 10px;
-  padding-left:10px;
+  padding-top: 2%;
+  padding-left:3%;
 
 }
 

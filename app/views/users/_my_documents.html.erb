@@ -1,8 +1,6 @@
 <div class="row">
   <% @myDocs.each do |doc| %>
 
-
-
     <div class= "column" > 
       <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
       <div class="h_line"></div>
@@ -11,7 +9,7 @@
         <div class="tile-content"> 
 
 
-        <% if doc.author  != "" %>
+        <% if doc.author != "" && doc.author %>
         Author: <%= doc.author  %> <br>
         <%end%>
       
@@ -22,7 +20,6 @@
       <% if !doc.groups.empty? %> 
        Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
        <% end %>
-
 
        Status: 
        <span id="status-icon"> 

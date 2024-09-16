@@ -1,6 +1,5 @@
 <div class="row">
 
-  <% @newDoc = false%>
   <% @sharedDocs.each do |doc| %>
 
     <div class= "column"> 
@@ -15,12 +14,13 @@
         <%end%>
 
       
-           <% if doc.publication_date && doc.publication_date != "" %>
+
+      <% if doc.publication_date && doc.publication_date != "" %>
         Date: <%= doc.publication_date %> <br> 
       <% end %>
        
-             <% if !doc.groups.empty? %> 
-       Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
+      <% if !doc.groups.empty? %> 
+         Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
        <% end %>
 
        Status: 

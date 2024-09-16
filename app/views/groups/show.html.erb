@@ -2,8 +2,9 @@
 <br><br><br>
 
 <% if in_group(params[:id])%>
+
 <% if @group.ideaSpaceOn %>
-	<button class="btn btn-primary"><a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link'> Access Idea Space </a>
+	<button class="btn btn-primary"><a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link' target="_blank"> Access Idea Space </a>
 	</button>
 <% end %>
 
@@ -16,29 +17,28 @@
           original_title: 'Delete'}} %>
 <% end %>
 
-
-
- <br><br>All Members 
-	<table class="member-table">
-		<tr class="member-table-row">
-			<th> Name </th>
-			<th> Role </th>
-		</tr>
-	<% if !@memberships.empty? %>
-	<% @memberships.each do |m| %>
-			<tr class="member-table-row"> 
-				<% @user = User.find(m.user_id) %>
-				<td> <%= @user.firstname + " " + @user.lastname[0] + "." %></td>
-
-				<td> <%= m.role %> </td> 
+	<% unless @group.name == 'Public' && is_member(@group.id) %>
+	 <br><br>All Members 
+	 
+		<table class="member-table">
+			
+			<tr class="member-table-row">
+				<th> Name </th>
+				<th> Role </th>
 			</tr>
-		<% end %>
-	<% end %>
-	</table>
+		<% if !@memberships.empty? %>
+			<% @memberships.includes(:user).each do |m| %>
+					<tr class="member-table-row"> 
+						<% @user = m.user %>
+						<td> <%= @user.firstname + " " + @user.lastname[0] + "." %></td>
+						<td> <%= m.role %> </td> 
+					</tr>
+			<% end #.each %>
+		<% end #if%>
+		</table>
+	
 
-
-
-
+	<% end #unless %>
 
 <% else %>
 
@@ -48,13 +48,11 @@ You do not have permission to view this page.
 
 
 	<style>
-	#idea-space {
-		
-	}
+
 	.member-table {
 	  border-collapse: collapse;
 	  width: 60%;
-	  background-color: white;
+	  background-color:white;
 	}
 
 	td, th {
@@ -79,6 +77,9 @@ You do not have permission to view this page.
 		text-decoration: none;
 	}
 
+	#action-buttons{
+		display:flex;
+	}
 
 	</style>
 

@@ -23,9 +23,9 @@
       <% end %>
       
        
-                    <% if !doc.groups.empty? %> 
+      <% if !doc.groups.empty? %> 
        Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
-       <% end %>
+      <% end %>
 
        Status: 
        <span id="status-icon"> 
